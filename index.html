@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birinchi HTML Sahifamiz | Veb-Koinot Muhandisi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.85);
+      --bg-card-border: rgba(255, 255, 255, 0.12);
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --accent-pink: #ec4899;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+      --font-heading: 'Fredoka', cursive, system-ui, sans-serif;
+      --font-code: 'Fira Code', monospace;
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-full: 9999px;
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.4);
+      --shadow-card: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
+      --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 20%, #1e1b4b 0%, #0f172a 60%, #020617 100%);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient animated stars background */
+    .space-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration, 3s) infinite ease-in-out;
+      opacity: 0.3;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.9; transform: scale(1.3); }
+    }
+
+    /* App Header */
+    header.app-header {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--bg-card-border);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(to right, #ffffff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fbbf24;
+    }
+
+    .stat-pill svg {
+      filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8));
+    }
+
+    .btn-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s var(--transition-spring);
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Progress bar */
+    .progress-track {
+      position: relative;
+      z-index: 20;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      width: 100%;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4, #10b981);
+      width: 10%;
+      transition: width 0.5s var(--transition-spring);
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
+    }
+
+    /* Main Container */
+    main.viewport-container {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Slide Card */
+    .slide-wrapper {
+      width: 100%;
+      height: calc(100vh - 180px);
+      min-height: 570px;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 24px 32px;
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateX(40px) scale(0.97);
+      transition: opacity 0.4s ease, transform 0.4s var(--transition-spring);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      z-index: 5;
+    }
+
+    .slide-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .slide-badge-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tag-chip {
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      color: #a5b4fc;
+      padding: 4px 14px;
+      border-radius: var(--radius-sm);
+    }
+
+    .slide-title {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .slide-metaphor {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    /* Footer Navigation */
+    footer.app-footer {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 28px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--bg-card-border);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s var(--transition-spring);
+      min-height: 48px;
+    }
+
+    .btn-prev {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-prev:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateX(-4px);
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(236, 72, 153, 0.4);
+    }
+
+    .btn-next:hover:not(:disabled) {
+      transform: translateX(4px) scale(1.03);
+      box-shadow: 0 6px 24px rgba(236, 72, 153, 0.6);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .dots-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s var(--transition-spring);
+    }
+
+    .dot.active {
+      width: 32px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ec4899, #6366f1);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+    }
+
+    .dot.completed {
+      background: #10b981;
+    }
+
+    /* Common Child Friendly UI Elements */
+    .interactive-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .big-action-btn {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      transition: all 0.25s var(--transition-spring);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .big-action-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 10px 28px rgba(16, 185, 129, 0.6);
+    }
+
+    .robo-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #e2e8f0;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .robo-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 28px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .code-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s var(--transition-spring);
+    }
+
+    .code-chip:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateX(4px);
+    }
+
+    /* Grids */
+    .s1-container, .s2-grid, .s3-grid, .s4-grid, .s5-grid, 
+    .s6-grid, .s7-grid, .s8-grid, .s9-grid, .s10-grid {
+      width: 100%;
+      height: 100%;
+      align-items: center;
+    }
+
+    .s1-container { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; }
+    .s2-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: stretch; }
+    .s3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .s4-grid { display: grid; grid-template-columns: 1.2fr 0.9fr; gap: 28px; }
+    .s5-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .s6-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; }
+    .s7-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; }
+    .s8-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .s9-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .s10-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+
+    /* Slide 1 Styles */
+    .stage-switch {
+      display: flex;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      padding: 6px;
+      gap: 6px;
+    }
+
+    .switch-tab {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s var(--transition-spring);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .switch-tab.active {
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Slide 2: Full HTML Structure & Compiler */
+    .s2-editor-box {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .s2-code-header {
+      background: #1e293b;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: #38bdf8;
+    }
+
+    .s2-textarea {
+      flex: 1;
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 14px 16px;
+      color: #f8fafc;
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .s2-preview-box {
+      background: #fff;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: #0f172a;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .s2-preview-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .structure-explainer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .structure-item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .structure-item:hover, .structure-item.active {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      color: #fff;
+    }
+
+    /* Slide 3: Juft va Toq Teglar (Tag Sorter Game) */
+    .tag-basket-zone {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      height: 100%;
+      justify-content: center;
+    }
+
+    .basket-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px dashed #6366f1;
+      border-radius: 20px;
+      padding: 16px 20px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .basket-card.paired { border-color: #ec4899; }
+    .basket-card.single { border-color: #f59e0b; }
+
+    .basket-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .basket-chips-slot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+      min-height: 60px;
+    }
+
+    .draggable-tag-chip {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.25s var(--transition-spring);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .draggable-tag-chip:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .draggable-tag-chip.sorted {
+      pointer-events: none;
+      transform: scale(0.9);
+      opacity: 0.9;
+    }
+
+    /* Slide 4: Head & Body */
+    .mini-browser-bar {
+      width: 100%;
+      max-width: 440px;
+      background: #1e293b;
+      border-radius: 12px 12px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .browser-dots { display: flex; gap: 6px; }
+    .b-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .b-red { background: #ef4444; }
+    .b-yellow { background: #f59e0b; }
+    .b-green { background: #10b981; }
+
+    .browser-tab {
+      background: #334155;
+      padding: 4px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: var(--font-code);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .drop-zone-head {
+      background: rgba(147, 51, 234, 0.15);
+      border: 2px dashed #a855f7;
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .drop-zone-body {
+      background: rgba(14, 165, 233, 0.15);
+      border: 2px dashed #0284c7;
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Slide 5: Loudspeaker */
+    .speech-preview-box {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 20px 24px;
+      width: 100%;
+      text-align: center;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tag-sel-btn {
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-family: var(--font-code);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tag-sel-btn.active {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+      transform: scale(1.08);
+    }
+
+    /* Slide 6: Img Frame */
+    .hologram-frame {
+      width: 100%;
+      height: 280px;
+      background: #090d16;
+      border: 3px solid #38bdf8;
+      border-radius: 24px;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Slide 7: Link */
+    .space-teleport-zone {
+      position: relative;
+      height: 340px;
+      background: #020617;
+      border: 2px solid #6366f1;
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .wormhole-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px dashed #ec4899;
+      animation: spinWormhole 6s linear infinite;
+    }
+
+    @keyframes spinWormhole {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Slide 8: Button */
+    .cockpit-console {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 24px;
+      padding: 24px;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-user-btn {
+      padding: 18px 36px;
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+    }
+
+    /* Slide 9: Div */
+    .clean-card-target {
+      width: 290px;
+      background: rgba(30, 41, 59, 0.95);
+      border: 2px dashed #6366f1;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s ease;
+    }
+
+    .clean-card-target.snapped {
+      border: 2px solid #10b981;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Slide 10: Final Lab */
+    .editor-pane {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .code-textarea {
+      flex: 1;
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 16px;
+      color: #f8fafc;
+      font-family: var(--font-code);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .preview-pane {
+      background: #ffffff;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #0f172a;
+    }
+
+    .sandbox-viewport {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #fff;
+      color: #0f172a;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .diploma-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .diploma-modal-overlay.open { display: flex; }
+
+    .diploma-card {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 4px solid #f59e0b;
+      border-radius: 28px;
+      padding: 36px 48px;
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(245, 158, 11, 0.5);
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 150;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--accent-emerald);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s var(--transition-spring);
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .s1-container, .s2-grid, .s3-grid, .s4-grid, .s5-grid, 
+      .s6-grid, .s7-grid, .s8-grid, .s9-grid, .s10-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .slide-wrapper { height: auto; min-height: 640px; }
+      .slide { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="space-stars" id="spaceStars"></div>
+  <canvas id="confettiCanvas"></canvas>
+
+  <header class="app-header">
+    <div class="brand-wrap">
+      <div class="brand-badge">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">Birinchi HTML Sahifamiz</h1>
+        <div class="brand-sub">🚀 Veb-Koinot Muhandisi</div>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <div class="stat-pill" title="Yig'ilgan yulduzlar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fbbf24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <span id="starCounter">0 / 10</span>
+      </div>
+
+      <button class="btn-icon" id="audioToggleBtn" title="Ovozni yoqish/o'chirish">
+        <svg id="audioIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+
+      <button class="btn-icon" id="helpModalBtn" title="Maslahat">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <main class="viewport-container">
+    <div class="slide-wrapper">
+
+      <!-- ==========================================
+           SLIDE 1: WELCOME & ROBOT 3-BOSQICHLI METAFORA
+           ========================================== -->
+      <section class="slide active" id="slide-1">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">1-qadam / 10</span>
+            <h2 class="slide-title">Xush Kelibsiz, Kichik Muhandis!</h2>
+          </div>
+          <div class="slide-metaphor">🦴 HTML = Veb-Saytning Suyagi</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s1-container">
+            <div style="display:flex; justify-content:center;">
+              <svg id="s1RobotSvg" width="260" height="300" viewBox="0 0 240 280">
+                <defs>
+                  <linearGradient id="bodyArmor" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6"/>
+                    <stop offset="100%" stop-color="#8b5cf6"/>
+                  </linearGradient>
+                </defs>
+
+                <line x1="120" y1="35" x2="120" y2="15" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="120" cy="12" r="7" fill="#f59e0b"/>
+
+                <rect id="s1Head" x="70" y="35" width="100" height="70" rx="18" fill="none" stroke="#94a3b8" stroke-width="4" stroke-dasharray="6,4"/>
+                <circle id="s1EyeL" cx="95" cy="70" r="10" fill="#334155"/>
+                <circle id="s1EyeR" cx="145" cy="70" r="10" fill="#334155"/>
+                <path d="M 105 85 Q 120 95 135 85" stroke="#94a3b8" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                <rect id="s1Torso" x="60" y="115" width="120" height="95" rx="16" fill="none" stroke="#94a3b8" stroke-width="4" stroke-dasharray="6,4"/>
+                <g id="s1Ribs">
+                  <line x1="80" y1="140" x2="160" y2="140" stroke="#64748b" stroke-width="3"/>
+                  <line x1="80" y1="160" x2="160" y2="160" stroke="#64748b" stroke-width="3"/>
+                </g>
+
+                <rect id="s1ArmL" x="25" y="125" width="25" height="70" rx="10" fill="none" stroke="#94a3b8" stroke-width="4"/>
+                <rect id="s1ArmR" x="190" y="125" width="25" height="70" rx="10" fill="none" stroke="#94a3b8" stroke-width="4"/>
+
+                <rect id="s1LegL" x="80" y="220" width="30" height="40" rx="8" fill="none" stroke="#94a3b8" stroke-width="4"/>
+                <rect id="s1LegR" x="130" y="220" width="30" height="40" rx="8" fill="none" stroke="#94a3b8" stroke-width="4"/>
+                <path id="s1Flame" d="M 85 260 Q 95 285 105 260 M 135 260 Q 145 285 155 260" stroke="#f59e0b" stroke-width="4" fill="none" opacity="0"/>
+              </svg>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="robo-bubble">
+                Salom, do'stim! Har qanday veb-sayt xuddi robotga o'xshaydi. Keling, uning bosqichlarini sinab ko'ramiz!
+              </div>
+
+              <div class="stage-switch">
+                <button class="switch-tab active" data-stage="html">
+                  <span>🦴 1. HTML</span>
+                </button>
+                <button class="switch-tab" data-stage="css">
+                  <span>🎨 2. +CSS</span>
+                </button>
+                <button class="switch-tab" data-stage="js">
+                  <span>⚡ 3. +JS</span>
+                </button>
+              </div>
+
+              <div class="interactive-card">
+                <h4 id="s1StateTitle" style="color:#fff; margin-bottom:6px;">1. HTML — Mustahkam Suyak</h4>
+                <p id="s1StateDesc" style="font-size:0.9rem; color:#cbd5e1; line-height:1.5;">
+                  HTML veb-sahifaning ichki skeletidir! Sarlavhalar, matnlar va tugmalar aynan HTML orqali qad rostlaydi.
+                </p>
+              </div>
+
+              <button class="big-action-btn" id="s1CompleteBtn">
+                <span>Keyingi qadamga o'tish →</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 2: HTML TO'LIQ STRUKTURASI & JONLI COMPILER
+           ========================================== -->
+      <section class="slide" id="slide-2">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;!DOCTYPE html&gt; &amp; &lt;html&gt;</span>
+            <h2 class="slide-title">HTML ning To'liq Strukturasi</h2>
+          </div>
+          <div class="slide-metaphor">🏗️ Barcha veb-sahifalarning o'zgarmas qolipi</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s2-grid">
+            <!-- Left: Live Editable Compiler -->
+            <div class="s2-editor-box">
+              <div class="s2-code-header">
+                <span>💻 Jonli Muharrir (HTML Skeleti)</span>
+                <span style="color:#10b981; font-size:0.75rem;">● Jonli Sinov</span>
+              </div>
+              <textarea class="s2-textarea" id="s2CodeEditor" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang="uz"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Mening Koinotim&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Salom, Kichik Muhandis!&lt;/h1&gt;
+    &lt;p&gt;Bu mening birinchi to'liq HTML sahifam!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</textarea>
+              <div style="padding:10px 14px; background:#1e293b; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.78rem; color:#94a3b8;">Matnni o'zgartirib ko'ring!</span>
+                <button class="big-action-btn" id="s2TestBtn" style="padding:6px 16px; font-size:0.9rem;">
+                  <span>Natijani Sinash ✨</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Interactive Explainer & Live Preview -->
+            <div style="display:flex; flex-direction:column; gap:12px; height:100%;">
+              <div class="robo-bubble" style="margin-bottom:0;">
+                Har bir HTML fayl aynan shu 5 ta asosiy bo'lakdan tashkil topadi! Har bir qator ustiga bosing:
+              </div>
+
+              <div class="structure-explainer-list">
+                <div class="structure-item active" data-desc="<!DOCTYPE html> — Brauzerga bu eng zamonaviy HTML5 sahifasi ekanini e'lon qiluvchi pasport!">
+                  <strong>1. &lt;!DOCTYPE html&gt;</strong> — Sahifa pasporti
+                </div>
+                <div class="structure-item" data-desc="<html lang='uz'>...</html> — Butun veb-koinotni o'z ichiga oluvchi Bosh Quti!">
+                  <strong>2. &lt;html&gt;</strong> — Koinotning Bosh Qutisi
+                </div>
+                <div class="structure-item" data-desc="<head>...</head> — Robotning Miyasi. Bu yerda sayt nomi (<title>) kabi ko'rinmas ma'lumotlar saqlanadi.">
+                  <strong>3. &lt;head&gt;</strong> — Miya (ko'rinmas qism)
+                </div>
+                <div class="structure-item" data-desc="<title>...</title> — Brauzerning yuqori yorlig'ida (tab) ko'rinadigan sarlavha.">
+                  <strong>4. &lt;title&gt;</strong> — Brauzer yorlig'i nomi
+                </div>
+                <div class="structure-item" data-desc="<body>...</body> — Robotning Tanasi. Barcha matnlar, rasmlar va tugmalar aynan shu yerga yoziladi!">
+                  <strong>5. &lt;body&gt;</strong> — Tana (dunyo ko'radigan qism)
+                </div>
+              </div>
+
+              <!-- Live mini preview -->
+              <div class="s2-preview-box">
+                <div class="mini-browser-bar" style="max-width:100%; border-radius:0;">
+                  <div class="browser-dots"><div class="b-dot b-red"></div><div class="b-dot b-yellow"></div><div class="b-dot b-green"></div></div>
+                  <div style="font-size:0.75rem; color:#64748b; font-family:var(--font-code);">Brauzer oynasi</div>
+                </div>
+                <div class="s2-preview-content" id="s2Preview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 3: JUFT VA TOQ TEGLAR (TAG SORTER GAME)
+           ========================================== -->
+      <section class="slide" id="slide-3">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">Juft vs Toq Teglar</span>
+            <h2 class="slide-title">Ikkizaklar va Yolg'iz Qahramonlar</h2>
+          </div>
+          <div class="slide-metaphor">👥 Juft teglar quchoqlaydi | ⚡ Toq teglar yolg'iz ishlaydi</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s3-grid">
+            <!-- Left: Tag Bank -->
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="robo-bubble">
+                HTML da teglar 2 xil bo'ladi:<br>
+                • <strong>Juft teglar:</strong> Ochiladi va yopiladi (<code>&lt;h1&gt;...&lt;/h1&gt;</code>).<br>
+                • <strong>Toq teglar:</strong> Yolg'iz o'zi ishlaydi, yopuvchisi bo'lmaydi (<code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>).<br>
+                Har bir tegni o'z to'g'ri savatiga bosing!
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:10px;" id="s3TagBank">
+                <div class="draggable-tag-chip" data-type="paired" data-tag="h1">&lt;h1&gt;...&lt;/h1&gt;</div>
+                <div class="draggable-tag-chip" data-type="single" data-tag="img">&lt;img src="..."&gt;</div>
+                <div class="draggable-tag-chip" data-type="paired" data-tag="p">&lt;p&gt;...&lt;/p&gt;</div>
+                <div class="draggable-tag-chip" data-type="single" data-tag="br">&lt;br&gt; (Qator tashlash)</div>
+                <div class="draggable-tag-chip" data-type="paired" data-tag="div">&lt;div&gt;...&lt;/div&gt;</div>
+                <div class="draggable-tag-chip" data-type="single" data-tag="hr">&lt;hr&gt; (Gorizontal chiziq)</div>
+              </div>
+
+              <div class="interactive-card">
+                <h4 style="color:#fbbf24; margin-bottom:4px;">💡 Qanday eslab qolamiz?</h4>
+                <p style="font-size:0.88rem; color:#cbd5e1;">
+                  Agar teg ichiga matn yoki boshqa narsa solish kerak bo'lsa — u <strong>Juft teg</strong>! Agar u o'zi bitta vazifani qilsa (masalan, rasm yoki yangi qator) — u <strong>Toq teg</strong>!
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: 2 Baskets -->
+            <div class="tag-basket-zone">
+              <div class="basket-card paired" id="basketPaired">
+                <div class="basket-title" style="color:#ec4899;">
+                  <span>👥 Juft Teglar Savati</span>
+                  <small style="font-size:0.8rem; color:#fda4af;">(&lt;ochuvchi&gt; ... &lt;/yopuvchi&gt;)</small>
+                </div>
+                <div class="basket-chips-slot" id="slotPaired"></div>
+              </div>
+
+              <div class="basket-card single" id="basketSingle">
+                <div class="basket-title" style="color:#f59e0b;">
+                  <span>⚡ Toq Teglar Savati</span>
+                  <small style="font-size:0.8rem; color:#fde68a;">(Yolg'iz o'zi yopiluvchi)</small>
+                </div>
+                <div class="basket-chips-slot" id="slotSingle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 4: <head> va <body> — MIYA VA TANA
+           ========================================== -->
+      <section class="slide" id="slide-4">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;head&gt; &amp; &lt;body&gt;</span>
+            <h2 class="slide-title">Miya va Tana Bo'limlari</h2>
+          </div>
+          <div class="slide-metaphor">🧠 Miya (ko'rinmas) vs 🦾 Tana (ko'rinadigan)</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s4-grid">
+            <div>
+              <div class="mini-browser-bar">
+                <div class="browser-dots"><div class="b-dot b-red"></div><div class="b-dot b-yellow"></div><div class="b-dot b-green"></div></div>
+                <div class="browser-tab">🌐 <span id="s4TabTitleText">(Hali nomsiz)</span></div>
+              </div>
+
+              <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+                <div class="drop-zone-head" id="s4HeadZone">
+                  <div style="font-weight:700; color:#c084fc; font-family:var(--font-code);">🧠 &lt;head&gt; (Miya Markazi)</div>
+                  <div id="s4HeadPlaced" style="font-size:0.85rem; color:#a855f7;">&lt;title&gt; kutilyapti...</div>
+                </div>
+
+                <div class="drop-zone-body" id="s4BodyZone">
+                  <div style="font-weight:700; color:#38bdf8; font-family:var(--font-code);">🦾 &lt;body&gt; (Robot Tanasi va Ekrani)</div>
+                  <div id="s4BodyScreen" style="background:#090d16; border-radius:12px; width:90%; padding:10px; min-height:60px; text-align:center; color:#94a3b8;">
+                    Monitor bo'sh...
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div class="robo-bubble">
+                Qaysi biri robotning miyasiga, qaysi biri gavdasiga kerak? Teglarni tanlang:
+              </div>
+
+              <div class="code-chip" data-target="head" data-tag="title">
+                <span>&lt;title&gt;Mening Koinotim&lt;/title&gt;</span>
+                <span style="font-size:0.8rem; color:#c084fc;">Miyaga 🧠</span>
+              </div>
+              <div class="code-chip" data-target="body" data-tag="h1">
+                <span>&lt;h1&gt;Salom, Dunyo!&lt;/h1&gt;</span>
+                <span style="font-size:0.8rem; color:#38bdf8;">Tanaga 🦾</span>
+              </div>
+              <div class="code-chip" data-target="body" data-tag="button">
+                <span>&lt;button&gt;Start Tugmasi&lt;/button&gt;</span>
+                <span style="font-size:0.8rem; color:#38bdf8;">Tanaga 🦾</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 5: <h1> ... <h6> & <p> — OVOZ KUCHAYTIRGICH
+           ========================================== -->
+      <section class="slide" id="slide-5">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;h1&gt;...&lt;h6&gt; &amp; &lt;p&gt;</span>
+            <h2 class="slide-title">Katta Sarlavha va Matn</h2>
+          </div>
+          <div class="slide-metaphor">📢 Katta Karnaydan Shivingacha</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s5-grid">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+              <svg width="220" height="200" viewBox="0 0 200 180">
+                <circle cx="100" cy="90" r="75" fill="#1e293b" stroke="#f59e0b" stroke-width="4"/>
+                <rect x="50" y="65" width="45" height="55" rx="10" fill="#3b82f6"/>
+                <circle cx="65" cy="85" r="5" fill="#fff"/>
+                <circle cx="80" cy="85" r="5" fill="#fff"/>
+                <polygon id="s5Horn" points="95,85 165,45 165,125" fill="#ec4899" stroke="#fda4af" stroke-width="3"/>
+              </svg>
+
+              <div class="speech-preview-box">
+                <div id="s5PreviewTag" style="font-family:var(--font-code); color:#ec4899; font-weight:700;">&lt;h1&gt; Katta Sarlavha</div>
+                <div id="s5PreviewText" style="font-size:2rem; font-weight:900; color:#fff;">DIQQAT, KOINOT!</div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="robo-bubble">
+                Ovoz balandligini tanlang! <code>&lt;h1&gt;</code> — eng baland sarlavha, <code>&lt;p&gt;</code> esa muloyim xatboshi hikoyachisidir.
+              </div>
+
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="tag-sel-btn active" data-tag="h1">h1</button>
+                <button class="tag-sel-btn" data-tag="h2">h2</button>
+                <button class="tag-sel-btn" data-tag="h3">h3</button>
+                <button class="tag-sel-btn" data-tag="h4">h4</button>
+                <button class="tag-sel-btn" data-tag="h5">h5</button>
+                <button class="tag-sel-btn" data-tag="h6">h6</button>
+                <button class="tag-sel-btn" data-tag="p" style="border-color:#10b981; background:rgba(16,185,129,0.2);">&lt;p&gt;</button>
+              </div>
+
+              <div class="interactive-card">
+                <h4 style="color:#38bdf8; margin-bottom:4px;">Qachon ishlatiladi?</h4>
+                <p id="s5UsageDesc" style="font-size:0.9rem; color:#cbd5e1;">
+                  &lt;h1&gt; — Sahifaning eng asosiy bosh nomi uchun!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 6: <img> — SEHRLI FOTO-RAMKA (TOQ TEG)
+           ========================================== -->
+      <section class="slide" id="slide-6">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;img src="..." alt="..."&gt;</span>
+            <h2 class="slide-title">Sehrli Foto-Ramka (Toq Teg)</h2>
+          </div>
+          <div class="slide-metaphor">🖼️ src = manzil | alt = qutqaruvchi tavsif</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s6-grid">
+            <div>
+              <div class="hologram-frame" id="s6Hologram">
+                <div id="s6ScreenContent" style="display:flex; flex-direction:column; align-items:center;">
+                  <div style="font-size:3.5rem;">🤖</div>
+                  <span style="font-size:0.9rem; color:#38bdf8; font-weight:700; margin-top:6px;">robot-portret.png</span>
+                </div>
+              </div>
+              <div style="margin-top:12px; background:#1e293b; border-radius:12px; padding:10px; font-family:var(--font-code); font-size:0.88rem; text-align:center;">
+                &lt;img src="<span style="color:#fbbf24;" id="s6SrcVal">robot.png</span>" alt="<span style="color:#34d399;" id="s6AltVal">Robot do'st</span>"&gt;
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div class="robo-bubble">
+                E'tibor bering: <code>&lt;img&gt;</code> toq teg! Uning yopuvchi <code>&lt;/img&gt;</code> sherigi bo'lmaydi. Foto-kartrijlarni almashtiring:
+              </div>
+
+              <div class="code-chip cartridge-item active" data-src="robot.png" data-alt="Kichik robot do'st" data-status="ok">
+                <span>🤖 robot.png</span>
+                <span style="font-size:0.8rem; color:#10b981;">To'g'ri manzil</span>
+              </div>
+              <div class="code-chip cartridge-item" data-src="galaktika.png" data-alt="Moviy galaktika nuri" data-status="ok">
+                <span>🌌 galaktika.png</span>
+                <span style="font-size:0.8rem; color:#10b981;">Kosmik fon</span>
+              </div>
+              <div class="code-chip cartridge-item" data-src="xato-link.png" data-alt="Qutqaruvchi: Bu yerda astronavt rasmi bor edi!" data-status="broken">
+                <span>⚠️ xato-link.png</span>
+                <span style="font-size:0.8rem; color:#ef4444;">Buzilgan manzil</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 7: <a> — TELEPORT PORTALI
+           ========================================== -->
+      <section class="slide" id="slide-7">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;a href="..."&gt;...&lt;/a&gt;</span>
+            <h2 class="slide-title">Teleport Portali (Havola)</h2>
+          </div>
+          <div class="slide-metaphor">🌌 href = Giper-koinot teleport manzili</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s7-grid">
+            <div class="space-teleport-zone">
+              <div id="s7Ship" style="font-size:3.5rem; transition:all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);">🛸</div>
+              <div style="width:100px; height:100px; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div class="wormhole-ring"></div>
+                <div id="s7PlanetIcon" style="font-size:2.8rem; z-index:2;">🔴</div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div class="robo-bubble">
+                Sahifalarni bog'lovchi portal! Manzilni (<code>href=""</code>) tanlang va teleport tugmasini bosing:
+              </div>
+
+              <button class="code-chip s7-dest-btn active" data-dest="#mars" data-planet="🔴">
+                <span>href="#mars"</span>
+                <span>Mars Bazasi 🔴</span>
+              </button>
+              <button class="code-chip s7-dest-btn" data-dest="#yulduz" data-planet="⭐">
+                <span>href="#yulduz"</span>
+                <span>Yulduzlar Shahri ⭐</span>
+              </button>
+              <button class="code-chip s7-dest-btn" data-dest="#oy" data-planet="🌙">
+                <span>href="#oy"</span>
+                <span>Oy Stansiyasi 🌙</span>
+              </button>
+
+              <button class="big-action-btn" id="s7WarpBtn" style="justify-content:center; margin-top:8px;">
+                <span>🚀 &lt;a&gt; Teleport! &lt;/a&gt;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 8: <button> — HARAKAT PULTI
+           ========================================== -->
+      <section class="slide" id="slide-8">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;button&gt;...&lt;/button&gt;</span>
+            <h2 class="slide-title">Reaktiv Harakat Tugmasi</h2>
+          </div>
+          <div class="slide-metaphor">🕹️ Bosilsa mo''jiza sodir bo'ladigan pult</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s8-grid">
+            <div class="cockpit-console" id="s8Cockpit">
+              <div id="s8Rocket" style="font-size:3.5rem; margin-bottom:24px; transition:all 0.8s ease;">🚀</div>
+              <button class="interactive-user-btn" id="s8TriggerBtn">
+                <span id="s8BtnLabel">🚀 RAKETANI UCHIRISH!</span>
+              </button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div class="robo-bubble">
+                <code>&lt;button&gt;</code> — foydalanuvchiga amallarni bajarish imkonini beradi. Buyruqni tanlang va qizil tugmani bosing:
+              </div>
+
+              <button class="code-chip s8-preset-btn active" data-text="🚀 RAKETANI UCHIRISH!" data-action="launch">
+                <span>Raketani Uchirish</span>
+              </button>
+              <button class="code-chip s8-preset-btn" data-text="🎉 KONFETTI YOMG'IRI!" data-action="confetti">
+                <span>Konfetti Otish</span>
+              </button>
+              <button class="code-chip s8-preset-btn" data-text="⚡ ROBOTNI QUVVATLASH!" data-action="power">
+                <span>Robotni Quvvatlash</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 9: <div> — SEHRLI TASHKILOTCHI QUTI
+           ========================================== -->
+      <section class="slide" id="slide-9">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">&lt;div class="..."&gt;</span>
+            <h2 class="slide-title">Sehrli Tashkilotchi Quti</h2>
+          </div>
+          <div class="slide-metaphor">🧱 Elementlarni bir butun kartochkaga jamlaydi</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="s9-grid">
+            <div style="display:flex; justify-content:center;">
+              <div class="clean-card-target" id="s9CardBox">
+                <div style="font-family:var(--font-code); color:#818cf8; font-size:0.85rem;">&lt;div class="kartochka"&gt;</div>
+                <div id="s9CardItems" style="color:#94a3b8; font-size:0.85rem; text-align:center;">
+                  <span>(Tarqoq elementlar...)</span>
+                </div>
+                <div style="font-family:var(--font-code); color:#818cf8; font-size:0.85rem;">&lt;/div&gt;</div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="robo-bubble">
+                Sarlavha, rasm va tugmani bitta tartibli blokga birlashtirish uchun <code>&lt;div&gt;</code> tegi ishlatiladi!
+              </div>
+
+              <button class="big-action-btn" id="s9SnapBtn" style="justify-content:center;">
+                <span>✨ &lt;div&gt; Qutisiga Jamlash!</span>
+              </button>
+
+              <div class="interactive-card">
+                <h4 style="color:#38bdf8; margin-bottom:4px;">Nega &lt;div&gt; kerak?</h4>
+                <p style="font-size:0.9rem; color:#cbd5e1;">
+                  Xuddi Lego qutisi kabi, u saytning turli qismlarini (kartochkalar, bloklar) bir joyga to'plash uchun xizmat qiladi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 10: JONLI KOD LABORATORIYASI VA DIPLOM
+           ========================================== -->
+      <section class="slide" id="slide-10">
+        <div class="slide-meta">
+          <div class="slide-badge-title">
+            <span class="tag-chip">10-qadam / Bosh Sinov</span>
+            <h2 class="slide-title">Jonli Kod Laboratoriyasi</h2>
+          </div>
+          <div class="slide-metaphor">🏆 O'z qo'lingiz bilan birinchi sahifangizni yarating!</div>
+        </div>
+
+        <div class="slide-body" style="flex-direction:column; align-items:stretch;">
+          <div style="display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+            <div class="stat-pill" id="quest1" style="font-size:0.8rem;">⚪ 1-topshiriq: &lt;h1&gt; va toq teg &lt;img&gt;</div>
+            <div class="stat-pill" id="quest2" style="font-size:0.8rem;">⚪ 2-topshiriq: &lt;p&gt; va &lt;button&gt;</div>
+            <div class="stat-pill" id="quest3" style="font-size:0.8rem;">⚪ 3-topshiriq: &lt;div&gt; qutisi</div>
+          </div>
+
+          <div class="s10-grid">
+            <div class="editor-pane">
+              <div style="background:#1e293b; padding:8px 14px; font-size:0.85rem; color:#94a3b8; font-weight:700; display:flex; justify-content:space-between;">
+                <span>index.html tahrirlagichi</span>
+                <button id="s10ResetBtn" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:0.75rem;">Qayta tiklash</button>
+              </div>
+
+              <div style="padding:6px 10px; background:#0f172a; display:flex; gap:6px; overflow-x:auto;">
+                <button class="quick-tag-chip" data-insert="<h1>Mening Robotim</h1>">&lt;h1&gt;</button>
+                <button class="quick-tag-chip" data-insert="<p>Bu mening birinchi saytim!</p>">&lt;p&gt;</button>
+                <button class="quick-tag-chip" data-insert='<img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=200" alt="Robot">'>&lt;img&gt;</button>
+                <button class="quick-tag-chip" data-insert="<button>Meni bosing!</button>">&lt;button&gt;</button>
+                <button class="quick-tag-chip" data-insert='<div style="border:2px solid #6366f1; padding:10px; border-radius:10px;">\n</div>'>&lt;div&gt;</button>
+              </div>
+
+              <textarea class="code-textarea" id="s10CodeEditor" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang="uz"&gt;
+&lt;head&gt;
+  &lt;title&gt;Mening Birinchi Saytim&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Salom, Koinot!&lt;/h1&gt;
+  &lt;p&gt;Men veb-sayt yasashni o'rgandim!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+            </div>
+
+            <div class="preview-pane">
+              <div class="mini-browser-bar" style="max-width:100%; border-radius:0;">
+                <div class="browser-dots"><div class="b-dot b-red"></div><div class="b-dot b-yellow"></div><div class="b-dot b-green"></div></div>
+                <div style="font-size:0.75rem; color:#64748b;">https://mening-saytim.uz</div>
+              </div>
+              <div class="sandbox-viewport" id="s10LivePreview"></div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+            <span style="font-size:0.85rem; color:#94a3b8;">💡 Yuqoridagi tezkor tugmalarni bosing yoki qo'lda kod yozing!</span>
+            <button class="big-action-btn" id="s10ValidateBtn">
+              <span>🏆 Tekshirish va Diplomni Olish!</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <button class="nav-btn btn-prev" id="prevSlideBtn" disabled>← Orqaga</button>
+    <div class="dots-container" id="dotsContainer"></div>
+    <button class="nav-btn btn-next" id="nextSlideBtn">Oldinga →</button>
+  </footer>
+
+  <div class="diploma-modal-overlay" id="diplomaModal">
+    <div class="diploma-card">
+      <div style="font-size:3.5rem; margin-bottom:8px;">🏆</div>
+      <h3 style="color:#fbbf24; font-family:var(--font-heading); font-size:2rem;">YOSH VEB-MUHANDIS DIPLOMI</h3>
+      <p style="color:#cbd5e1; margin:10px 0;">Ushbu diplom HTML asoslarini muvaffaqiyatli yakunlagan yosh muhandisga beriladi:</p>
+      <input type="text" id="studentNameInput" value="Jasur Muhandis" style="background:rgba(255,255,255,0.1); border:2px dashed #f59e0b; border-radius:10px; color:#fff; font-size:1.5rem; text-align:center; padding:8px; width:70%; margin:10px 0;">
+      <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:20px;">Sana: <span id="diplomaDate"></span> • Veb-Koinot Akademiyasi</p>
+      <div style="display:flex; justify-content:center; gap:12px;">
+        <button class="big-action-btn" id="printDiplomaBtn">🖨️ Chop Etish / Saqlash</button>
+        <button class="big-action-btn" id="closeDiplomaBtn" style="background:rgba(255,255,255,0.2);">Yopish</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toastMsg">
+    <span id="toastIcon">⭐</span>
+    <span id="toastText">Barakalla, yosh muhandis!</span>
+  </div>
+
+  <script>
+    class SoundEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      toggleMute() { this.muted = !this.muted; return this.muted; }
+      playPop() {
+        if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain(), now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(750, now + 0.08);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.09);
+      }
+      playSnap() {
+        if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain(), now = this.ctx.currentTime;
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.11);
+      }
+      playSuccess() {
+        if (this.muted) return; this.init();
+        const now = this.ctx.currentTime, notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.25, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.08); osc.stop(now + idx * 0.08 + 0.26);
+        });
+      }
+      playError() {
+        if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.linearRampToValueAtTime(90, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.21);
+      }
+      playWarp() {
+        if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain(), now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.5);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.65);
+      }
+      playRocket() {
+        if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain(), now = this.ctx.currentTime;
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(90, now);
+        osc.frequency.linearRampToValueAtTime(350, now + 0.7);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.85);
+      }
+      playFanfare() {
+        if (this.muted) return; this.init();
+        const now = this.ctx.currentTime, chords = [[523.25, 659.25], [587.33, 698.46], [659.25, 783.99], [783.99, 1046.50]];
+        chords.forEach((pair, idx) => {
+          pair.forEach(freq => {
+            const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+            gain.gain.setValueAtTime(0.2, now + idx * 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.15 + 0.4);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.15); osc.stop(now + idx * 0.15 + 0.45);
+          });
+        });
+      }
+    }
+    const sound = new SoundEngine();
+
+    // Confetti
+    const canvas = document.getElementById('confettiCanvas'), ctx = canvas.getContext('2d');
+    let confettiPieces = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+    function launchConfetti(count = 60) {
+      const colors = ['#f43f5e', '#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#38bdf8'];
+      for (let i = 0; i < count; i++) {
+        confettiPieces.push({
+          x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+          y: canvas.height / 2 + (Math.random() - 0.5) * 100,
+          vx: (Math.random() - 0.5) * 16, vy: (Math.random() - 1.2) * 18,
+          size: Math.random() * 9 + 5, color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 12, life: 1
+        });
+      }
+    }
+
+    function renderConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = confettiPieces.length - 1; i >= 0; i--) {
+        const p = confettiPieces[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.35; p.rotation += p.rotSpeed; p.life -= 0.012;
+        if (p.life <= 0) { confettiPieces.splice(i, 1); continue; }
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.4); ctx.restore();
+      }
+      requestAnimationFrame(renderConfetti);
+    }
+    renderConfetti();
+
+    // Star Background
+    const starsContainer = document.getElementById('spaceStars');
+    for (let i = 0; i < 40; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.width = Math.random() * 3 + 1 + 'px'; star.style.height = star.style.width;
+      star.style.left = Math.random() * 100 + '%'; star.style.top = Math.random() * 100 + '%';
+      star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+      starsContainer.appendChild(star);
+    }
+
+    // Slide Navigation
+    const totalSlides = 10;
+    let currentSlide = 1;
+    let earnedStars = new Set();
+    const starCounter = document.getElementById('starCounter'), progressFill = document.getElementById('progressFill'),
+          dotsContainer = document.getElementById('dotsContainer'), prevBtn = document.getElementById('prevSlideBtn'),
+          nextBtn = document.getElementById('nextSlideBtn'), toastMsg = document.getElementById('toastMsg'),
+          toastText = document.getElementById('toastText');
+
+    function showToast(text, icon = '🎉') {
+      document.getElementById('toastIcon').textContent = icon;
+      toastText.textContent = text;
+      toastMsg.classList.add('show');
+      setTimeout(() => toastMsg.classList.remove('show'), 2800);
+    }
+
+    function awardStar(slideNum) {
+      if (!earnedStars.has(slideNum)) {
+        earnedStars.add(slideNum);
+        starCounter.textContent = `${earnedStars.size} / ${totalSlides}`;
+        sound.playSuccess(); launchConfetti(35);
+        showToast(`Barakalla! ${slideNum}-yulduz qo'lga kiritildi! ⭐`);
+        updateDots();
+      }
+    }
+
+    for (let i = 1; i <= totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.className = `dot ${i === 1 ? 'active' : ''}`;
+      dot.addEventListener('click', () => { sound.playPop(); goToSlide(i); });
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateDots() {
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        const idx = index + 1;
+        dot.className = 'dot';
+        if (idx === currentSlide) dot.classList.add('active');
+        if (earnedStars.has(idx)) dot.classList.add('completed');
+      });
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum < 1 || slideNum > totalSlides) return;
+      document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+      currentSlide = slideNum;
+      document.getElementById(`slide-${currentSlide}`).classList.add('active');
+      progressFill.style.width = `${(currentSlide / totalSlides) * 100}%`;
+      prevBtn.disabled = currentSlide === 1;
+      nextBtn.disabled = currentSlide === totalSlides;
+      updateDots();
+      if (currentSlide === 2) updateS2Preview();
+      if (currentSlide === 10) updateSandboxPreview();
+    }
+
+    prevBtn.addEventListener('click', () => { sound.playPop(); goToSlide(currentSlide - 1); });
+    nextBtn.addEventListener('click', () => { sound.playPop(); goToSlide(currentSlide + 1); });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowRight' || e.key === ' ') goToSlide(currentSlide + 1);
+      else if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+    });
+
+    document.getElementById('audioToggleBtn').addEventListener('click', () => {
+      const isMuted = sound.toggleMute();
+      document.getElementById('audioToggleBtn').style.opacity = isMuted ? '0.4' : '1';
+      showToast(isMuted ? "Ovoz o'chirildi 🔇" : "Ovoz yoqildi 🔊", isMuted ? '🔇' : '🔊');
+    });
+
+    document.getElementById('helpModalBtn').addEventListener('click', () => {
+      sound.playPop();
+      showToast("Har bir bosqichdagi interaktiv o'yinlarni bajaring va yulduzlarni yiging!", '💡');
+    });
+
+    // Slide 1 Logic
+    document.querySelectorAll('.switch-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        sound.playPop();
+        document.querySelectorAll('.switch-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const stage = tab.dataset.stage;
+        const s1Head = document.getElementById('s1Head'), s1Torso = document.getElementById('s1Torso'),
+              s1Ribs = document.getElementById('s1Ribs'), s1Flame = document.getElementById('s1Flame');
+        if (stage === 'html') {
+          s1Head.setAttribute('fill', 'none'); s1Torso.setAttribute('fill', 'none');
+          s1Ribs.style.display = 'block'; s1Flame.style.opacity = '0';
+          document.getElementById('s1StateTitle').textContent = "1. HTML — Mustahkam Suyak";
+        } else if (stage === 'css') {
+          s1Head.setAttribute('fill', 'url(#bodyArmor)'); s1Torso.setAttribute('fill', 'url(#bodyArmor)');
+          s1Ribs.style.display = 'none'; s1Flame.style.opacity = '0';
+          document.getElementById('s1StateTitle').textContent = "2. +CSS — Go'zal Libos va Ranglar";
+        } else if (stage === 'js') {
+          s1Head.setAttribute('fill', 'url(#bodyArmor)'); s1Torso.setAttribute('fill', 'url(#bodyArmor)');
+          s1Flame.style.opacity = '1';
+          document.getElementById('s1StateTitle').textContent = "3. +JavaScript — Aql va Harakat";
+          awardStar(1);
+        }
+      });
+    });
+
+    document.getElementById('s1CompleteBtn').addEventListener('click', () => { awardStar(1); goToSlide(2); });
+
+    // Slide 2 Logic (Full HTML Structure & Compiler)
+    const s2CodeEditor = document.getElementById('s2CodeEditor');
+    const s2Preview = document.getElementById('s2Preview');
+    function updateS2Preview() {
+      s2Preview.innerHTML = s2CodeEditor.value;
+    }
+    s2CodeEditor.addEventListener('input', updateS2Preview);
+    document.getElementById('s2TestBtn').addEventListener('click', () => {
+      sound.playSuccess();
+      updateS2Preview();
+      awardStar(2);
+      showToast("To'liq HTML strukturasi muvaffaqiyatli ishga tushirildi! 🏗️");
+    });
+
+    document.querySelectorAll('.structure-item').forEach(item => {
+      item.addEventListener('click', () => {
+        sound.playPop();
+        document.querySelectorAll('.structure-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        showToast(item.dataset.desc, 'ℹ️');
+      });
+    });
+
+    // Slide 3 Logic (Tag Sorter: Paired vs Unpaired)
+    const draggableTagChips = document.querySelectorAll('.draggable-tag-chip');
+    const slotPaired = document.getElementById('slotPaired');
+    const slotSingle = document.getElementById('slotSingle');
+    let sortedCount = 0;
+
+    draggableTagChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const type = chip.dataset.type;
+        sound.playSnap();
+        chip.classList.add('sorted');
+
+        if (type === 'paired') {
+          slotPaired.appendChild(chip);
+          showToast(`Barakalla! ${chip.dataset.tag} — ochiluvchi va yopiluvchi juft teg! 👥`);
+        } else {
+          slotSingle.appendChild(chip);
+          showToast(`Barakalla! ${chip.dataset.tag} — o'zini o'zi yopuvchi toq teg! ⚡`);
+        }
+
+        sortedCount++;
+        if (sortedCount === 6) {
+          awardStar(3);
+          showToast("Barcha teglar to'g'ri saralandi! Juft va toq teglarni o'rgandingiz! 🎉");
+        }
+      });
+    });
+
+    // Slide 4 Logic (Head & Body)
+    let s4Placed = 0;
+    document.querySelectorAll('#slide-4 .code-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const target = chip.dataset.target, tag = chip.dataset.tag;
+        if (target === 'head') {
+          sound.playSnap();
+          document.getElementById('s4TabTitleText').textContent = "Mening Koinotim";
+          document.getElementById('s4HeadPlaced').innerHTML = '<span style="color:#c084fc; font-weight:700;">&lt;title&gt; o\'rnatildi! ✅</span>';
+        } else {
+          sound.playPop();
+          if (tag === 'h1') {
+            document.getElementById('s4BodyScreen').innerHTML += '<h3 style="color:#38bdf8; margin:4px 0;">Salom, Dunyo!</h3>';
+          } else {
+            document.getElementById('s4BodyScreen').innerHTML += '<button style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer;">Start</button>';
+          }
+        }
+        chip.style.opacity = '0.4'; chip.style.pointerEvents = 'none';
+        s4Placed++;
+        if (s4Placed >= 3) awardStar(4);
+      });
+    });
+
+    // Slide 5 Logic (Headings h1-h6 & p)
+    const headSizes = {
+      h1: { size: '2.2rem', horn: '95,85 185,35 185,135', desc: 'Eng muhim sarlavha!' },
+      h2: { size: '1.8rem', horn: '95,85 170,45 170,125', desc: 'Katta boblar va mavzular sarlavhasi.' },
+      h3: { size: '1.5rem', horn: '95,85 155,55 155,115', desc: 'Bo‘lim ichidagi kichik mavzu sarlavhasi.' },
+      h4: { size: '1.3rem', horn: '95,85 140,65 140,105', desc: 'O‘rta darajali sarlavha.' },
+      h5: { size: '1.1rem', horn: '95,85 130,70 130,100', desc: 'Kichik sarlavha.' },
+      h6: { size: '0.95rem', horn: '95,85 120,75 120,95', desc: 'Eng mayda sarlavha darajasi.' },
+      p:  { size: '1.05rem', horn: '95,85 110,80 110,90', desc: 'Oddiy xatboshi matni (paragraph). Asosiy hikoyalar p tegi ichida yoziladi.' }
+    };
+
+    document.querySelectorAll('.tag-sel-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playPop();
+        document.querySelectorAll('.tag-sel-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tag = btn.dataset.tag;
+        const spec = headSizes[tag];
+        document.getElementById('s5Horn').setAttribute('points', spec.horn);
+        document.getElementById('s5PreviewTag').textContent = `<${tag}>`;
+        document.getElementById('s5PreviewText').style.fontSize = spec.size;
+        document.getElementById('s5UsageDesc').textContent = spec.desc;
+        awardStar(5);
+      });
+    });
+
+    // Slide 6 Logic (Image & Alt)
+    document.querySelectorAll('.cartridge-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.cartridge-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const src = item.dataset.src;
+        const alt = item.dataset.alt;
+        const status = item.dataset.status;
+        document.getElementById('s6SrcVal').textContent = src;
+        document.getElementById('s6AltVal').textContent = alt;
+
+        if (status === 'ok') {
+          sound.playSnap();
+          document.getElementById('s6ScreenContent').innerHTML = `
+            <div style="font-size:3.5rem;">${src === 'robot.png' ? '🤖' : '🌌'}</div>
+            <span style="font-size:0.9rem; color:#38bdf8; font-weight:700; margin-top:6px;">${src}</span>
+          `;
+        } else {
+          sound.playError();
+          document.getElementById('s6ScreenContent').innerHTML = `
+            <div style="background:rgba(239,68,68,0.2); border:2px dashed #ef4444; border-radius:12px; padding:14px; text-align:center;">
+              <div style="font-size:2rem; margin-bottom:4px;">🖼️❌</div>
+              <div style="font-size:0.8rem; color:#fca5a5; font-weight:700;">Rasm ochilmadi!</div>
+              <div style="font-size:0.85rem; color:#34d399; font-weight:800; margin-top:6px;">alt: "${alt}"</div>
+            </div>
+          `;
+          showToast("alt tegi buzilgan rasmni tavsiflab, bolalarni qutqardi! 🛟");
+        }
+        awardStar(6);
+      });
+    });
+
+    // Slide 7 Logic (Link Teleport)
+    let currentDest = '#mars';
+    document.querySelectorAll('.s7-dest-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playPop();
+        document.querySelectorAll('.s7-dest-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentDest = btn.dataset.dest;
+        document.getElementById('s7PlanetIcon').textContent = btn.dataset.planet;
+      });
+    });
+
+    document.getElementById('s7WarpBtn').addEventListener('click', () => {
+      sound.playWarp();
+      const ship = document.getElementById('s7Ship');
+      ship.style.transform = 'translateX(220px) scale(0.2)';
+      ship.style.opacity = '0';
+      setTimeout(() => {
+        ship.style.transition = 'none';
+        ship.style.transform = 'translateX(0) scale(1)';
+        ship.style.opacity = '1';
+        setTimeout(() => {
+          ship.style.transition = 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        }, 50);
+        awardStar(7);
+        launchConfetti(35);
+        showToast(`Giper-portal orqali ${currentDest} manziliga yetib keldik! 🛸`);
+      }, 650);
+    });
+
+    // Slide 8 Logic (Button Cockpit)
+    let s8Action = 'launch';
+    document.querySelectorAll('.s8-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playPop();
+        document.querySelectorAll('.s8-preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('s8BtnLabel').textContent = btn.dataset.text;
+        s8Action = btn.dataset.action;
+      });
+    });
+
+    document.getElementById('s8TriggerBtn').addEventListener('click', () => {
+      if (s8Action === 'launch') {
+        sound.playRocket();
+        const r = document.getElementById('s8Rocket');
+        r.style.transform = 'translateY(-240px) scale(0.6)';
+        setTimeout(() => r.style.transform = 'translateY(0) scale(1)', 900);
+      } else if (s8Action === 'confetti') {
+        sound.playSuccess();
+        launchConfetti(70);
+      } else {
+        sound.playSuccess();
+        showToast("Robot 100% quvvatlandi! ⚡");
+      }
+      awardStar(8);
+    });
+
+    // Slide 9 Logic (Div Organizer)
+    document.getElementById('s9SnapBtn').addEventListener('click', () => {
+      sound.playSnap();
+      document.getElementById('s9CardBox').classList.add('snapped');
+      document.getElementById('s9CardItems').innerHTML = `
+        <div style="background:#1e293b; border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+          <span style="font-size:2rem;">🤖</span>
+          <strong style="color:#fff; font-size:1.1rem;">Koinot Qahramoni</strong>
+          <p style="font-size:0.8rem; color:#94a3b8; text-align:center;">div tegi tufayli hamma unsurlar tartibli kartochkaga aylandi!</p>
+          <button style="background:#6366f1; color:#fff; border:none; padding:6px 14px; border-radius:6px; font-weight:700;">Batafsil</button>
+        </div>
+      `;
+      awardStar(9);
+      showToast("Elementlar bitta tartibli <div> kartochkaga jamlandi! 📦");
+    });
+
+    // Slide 10 Logic (Final Lab & Quests)
+    const s10CodeEditor = document.getElementById('s10CodeEditor');
+    const s10LivePreview = document.getElementById('s10LivePreview');
+    const quickTagChips = document.querySelectorAll('.quick-tag-chip');
+
+    function updateSandboxPreview() {
+      const code = s10CodeEditor.value;
+      s10LivePreview.innerHTML = code;
+      checkQuests(code);
+    }
+    s10CodeEditor.addEventListener('input', updateSandboxPreview);
+
+    quickTagChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        sound.playPop();
+        const insertText = chip.dataset.insert;
+        const curPos = s10CodeEditor.selectionStart;
+        const text = s10CodeEditor.value;
+        s10CodeEditor.value = text.slice(0, curPos) + insertText + text.slice(curPos);
+        updateSandboxPreview();
+      });
+    });
+
+    document.getElementById('s10ResetBtn').addEventListener('click', () => {
+      sound.playPop();
+      s10CodeEditor.value = `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <title>Mening Birinchi Saytim</title>
+</head>
+<body>
+  <h1>Salom, Koinot!</h1>
+  <p>Men veb-sayt yasashni o'rgandim!</p>
+</body>
+</html>`;
+      updateSandboxPreview();
+    });
+
+    function checkQuests(code) {
+      const lower = code.toLowerCase();
+      // Quest 1: h1 and img
+      const hasH1 = lower.includes('<h1');
+      const hasImg = lower.includes('<img');
+      const q1El = document.getElementById('quest1');
+      if (hasH1 && hasImg) {
+        q1El.innerHTML = '✅ 1-topshiriq: &lt;h1&gt; va toq teg &lt;img&gt;';
+        q1El.style.borderColor = '#10b981';
+      } else {
+        q1El.innerHTML = '⚪ 1-topshiriq: &lt;h1&gt; va toq teg &lt;img&gt;';
+        q1El.style.borderColor = 'rgba(255,255,255,0.15)';
+      }
+
+      // Quest 2: p and button
+      const hasP = lower.includes('<p');
+      const hasBtn = lower.includes('<button');
+      const q2El = document.getElementById('quest2');
+      if (hasP && hasBtn) {
+        q2El.innerHTML = '✅ 2-topshiriq: &lt;p&gt; va &lt;button&gt;';
+        q2El.style.borderColor = '#10b981';
+      } else {
+        q2El.innerHTML = '⚪ 2-topshiriq: &lt;p&gt; va &lt;button&gt;';
+        q2El.style.borderColor = 'rgba(255,255,255,0.15)';
+      }
+
+      // Quest 3: div container
+      const hasDiv = lower.includes('<div');
+      const q3El = document.getElementById('quest3');
+      if (hasDiv) {
+        q3El.innerHTML = '✅ 3-topshiriq: &lt;div&gt; qutisi';
+        q3El.style.borderColor = '#10b981';
+      } else {
+        q3El.innerHTML = '⚪ 3-topshiriq: &lt;div&gt; qutisi';
+        q3El.style.borderColor = 'rgba(255,255,255,0.15)';
+      }
+    }
+
+    const diplomaModal = document.getElementById('diplomaModal');
+    const diplomaDate = document.getElementById('diplomaDate');
+    const now = new Date();
+    diplomaDate.textContent = `${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}`;
+
+    document.getElementById('s10ValidateBtn').addEventListener('click', () => {
+      sound.playFanfare();
+      awardStar(10);
+      launchConfetti(120);
+      diplomaModal.classList.add('open');
+    });
+
+    document.getElementById('closeDiplomaBtn').addEventListener('click', () => {
+      sound.playPop();
+      diplomaModal.classList.remove('open');
+    });
+
+    document.getElementById('printDiplomaBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Initial triggers
+    updateS2Preview();
+    updateSandboxPreview();
+  </script>
+</body>
+</html>
